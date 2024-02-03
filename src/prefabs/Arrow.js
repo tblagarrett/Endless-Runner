@@ -3,16 +3,17 @@ class Arrow extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame)
 
         // Spawn the arrow
-        scene.add.existing(this)
+        this.sprite = scene.add.existing(this)
         scene.physics.add.existing(this)
 
         // Set up properties
         this.direction = direction
         this.rotate(this.direction)
+        this.setDepth(-10)
     }
 
     update() {
-
+        this.move(this.direction)
     }
 
     rotate(direction) {

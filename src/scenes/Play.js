@@ -13,8 +13,21 @@ class Play extends Phaser.Scene {
         this.launcherLeft = new Launcher(this, w, h/2, 'launcher', 0, directions.LEFT).setOrigin(0.5, 0)
         this.launcherRight = new Launcher(this, 0, h/2, 'launcher', 0, directions.RIGHT).setOrigin(0.5, 0)
 
+        // Set up arrow group and collision
+        this.arrowGroup = this.add.group({
+            runChildUpdate: true
+        })
+        this.physics.add.collider(this.player, this.arrowGroup, null, (player, arrow) => {
+            arrow.destroy()
+        })
+
         // set up cursor keys
         this.cursors = this.input.keyboard.createCursorKeys();
+        
+        this.launcherDown.spawn(this.arrowGroup)
+        this.launcherUp.spawn(this.arrowGroup)
+        this.launcherLeft.spawn(this.arrowGroup)
+        this.launcherRight.spawn(this.arrowGroup)
     }
 
     update(time, delta) {

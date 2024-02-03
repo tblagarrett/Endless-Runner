@@ -31,4 +31,9 @@ class Launcher extends Phaser.GameObjects.Sprite {
                 console.log('Launcher: Rotate: Invalid Direction')
         }
     }
+
+    spawn(group) {
+        let arrow = new Arrow(this.scene, this.x, this.y, 'arrow', 0, this.direction)
+        group.add(arrow)
+    }
 }
