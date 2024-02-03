@@ -24,8 +24,13 @@ let config = {
 }
 
 let game = new Phaser.Game(config)
-game.settings = {
-
+settings = {
+    launcherMinFrequency: 3,
+    launcherCurrentFrequency: 3,
+    launcherMaxFrequency: .3,
+    arrowMinSpeed: 50,
+    arrowCurrentSpeed: 50,
+    arrowMaxSpeed: 400
 }
 
 // define globals

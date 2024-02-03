@@ -7,6 +7,12 @@ class Play extends Phaser.Scene {
         // Set player in the center
         this.player = new Player(this, w/2, h/2, 'player', 0)
 
+        // Set up launchers
+        this.launcherDown = new Launcher(this, w/2, 0, 'launcher', 0, directions.DOWN).setOrigin(0.5, 0)
+        this.launcherUp = new Launcher(this, w/2, h, 'launcher', 0, directions.UP).setOrigin(0.5, 0)
+        this.launcherLeft = new Launcher(this, w, h/2, 'launcher', 0, directions.LEFT).setOrigin(0.5, 0)
+        this.launcherRight = new Launcher(this, 0, h/2, 'launcher', 0, directions.RIGHT).setOrigin(0.5, 0)
+
         // set up cursor keys
         this.cursors = this.input.keyboard.createCursorKeys();
     }
