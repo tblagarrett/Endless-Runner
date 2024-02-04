@@ -20,14 +20,14 @@ let config = {
         // }
     },
     pixelArt: true,
-    scene: [ Load, Title, Play ]
+    scene: [ Load, Title, Play, Credits ]
 }
 
 let game = new Phaser.Game(config)
 settings = {
     launcherMinFrequency: 3,
     launcherCurrentFrequency: 3,
-    launcherMaxFrequency: .25,
+    launcherMaxFrequency: .3,
     launcherFrequencyChange: .1,
     arrowMinSpeed: 50,
     arrowCurrentSpeed: 50,
