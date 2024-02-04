@@ -217,7 +217,7 @@ class Play extends Phaser.Scene {
 
         // bump frequency every 5 levels (until max is hit)
         if(this.level % 5 == 0) {
-            console.log(`level: ${this.level}, speed: ${settings.arrowCurrentSpeed}, frequency: ${settings.launcherCurrentFrequency}`);
+            // console.log(`level: ${this.level}, speed: ${settings.arrowCurrentSpeed}, frequency: ${settings.launcherCurrentFrequency}`);
             if(settings.launcherCurrentFrequency > settings.launcherMaxFrequency) {
                 if (settings.launcherCurrentFrequency > 1) {
                     settings.launcherCurrentFrequency -= settings.launcherFrequencyChange * 2

@@ -31,7 +31,7 @@ settings = {
     launcherFrequencyChange: .1,
     arrowMinSpeed: 50,
     arrowCurrentSpeed: 50,
-    arrowMaxSpeed: 450,
+    arrowMaxSpeed: 500,
     arrowSpeedChange: 20
 }
 
