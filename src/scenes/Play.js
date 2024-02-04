@@ -137,12 +137,18 @@ class Play extends Phaser.Scene {
 
     update(time, delta) {
         if (this.gameOver) {
+            // stop all timers
             this.difficultyTimer.destroy()
             this.healingTimer.destroy()
             this.timer.destroy()
-            this.add.text(w/2, h/2 - 64, 'GAME OVER').setOrigin(0.5).setFontSize(32)
-            this.add.text(w/2, h/2 - 36, 'You lasted ' + this.timeLasted + ' seconds').setOrigin(0.5).setFontSize(24)
-            this.add.text(w/2, h/2 + 64, 'Press (SPACE) to Restart or (SHIFT) for Menu').setOrigin(0.5).setFontSize(24)
+
+            // display game over text, with rectangles behind
+            let gameOver = this.add.text(w/2, h/2 - 64, 'GAME OVER').setOrigin(0.5).setFontSize(32).setDepth(20)
+            this.add.rectangle(w/2, h/2 - 64, gameOver.width+20, gameOver.height+20, 0).setOrigin(0.5).setDepth(10)
+            let youLasted = this.add.text(w/2, h/2 - 36, 'You lasted ' + this.timeLasted + ' seconds').setOrigin(0.5).setFontSize(24).setDepth(20)
+            this.add.rectangle(w/2, h/2 - 36, youLasted.width+20, youLasted.height+20, 0).setOrigin(0.5).setDepth(10)
+            let pressKey = this.add.text(w/2, h/2 + 64, 'Press (SPACE) to Restart or (SHIFT) for Menu').setOrigin(0.5).setFontSize(24).setDepth(20)
+            this.add.rectangle(w/2, h/2 + 64, pressKey.width+20, pressKey.height+20, 0, 1).setOrigin(0.5).setDepth(10)
 
             settings.launcherCurrentFrequency = settings.launcherMinFrequency
             settings.arrowCurrentSpeed = settings.arrowMinSpeed
