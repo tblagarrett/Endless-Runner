@@ -24,6 +24,12 @@ class Load extends Phaser.Scene {
         this.load.image('arrow', 'img/arrow.png')
         this.load.image('heart', 'img/heart.png')
         this.load.image('space', 'img/space.png')
+
+        // load sound assets
+        this.load.audio('sfx-block', 'sfx/block.wav')
+        this.load.audio('sfx-hurt', 'sfx/hurt.wav')
+        this.load.audio('sfx-heal', 'sfx/heal.wav')
+        this.load.audio('sfx-ui-blip', 'sfx/ui-blip.wav')
     }
 
     create() {

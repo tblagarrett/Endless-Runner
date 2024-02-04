@@ -8,6 +8,7 @@ class Credits extends Phaser.Scene {
         this.add.text (w/2, h/2 + 50, 'Press any key to return').setScale(2).setOrigin(0.5, 0.5)
     
         this.input.keyboard.on('keydown', () => {
+            this.sound.play('sfx-ui-blip')
             this.scene.start('titleScene')
         })
     }

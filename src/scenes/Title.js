@@ -13,9 +13,11 @@ class Title extends Phaser.Scene {
 
     update(time, delta) {
         if (this.cursors.space.isDown) {
+            this.sound.play('sfx-ui-blip')
             this.scene.start('playScene')
         }
         if (this.cursors.shift.isDown) {
+            this.sound.play('sfx-ui-blip')
             this.scene.start('creditsScene')
         }
     }

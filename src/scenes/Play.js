@@ -45,6 +45,7 @@ class Play extends Phaser.Scene {
                             
             // cam shake: .shake( [duration] [, intensity] )
             this.cameras.main.shake(100, 0.01);
+            this.sound.play('sfx-hurt')
 
             if (this.health <= 0) {
                 this.gameOver = true
@@ -52,7 +53,14 @@ class Play extends Phaser.Scene {
         }, (player, arrow) => {
             // check for hit
             arrow.destroy()
-            return player.didItHit(arrow)
+            let hit = player.didItHit(arrow)
+            
+            // on miss:
+            if (!hit) {
+                this.sound.play('sfx-block', {volume: 0.5})
+            }
+
+            return hit
         })
 
         // set up cursor keys
@@ -154,8 +162,10 @@ class Play extends Phaser.Scene {
             settings.arrowCurrentSpeed = settings.arrowMinSpeed
             // Menu Navigation
             if (this.cursors.space.isDown) {
+                this.sound.play('sfx-ui-blip')
                 this.scene.restart()
             } else if (this.cursors.shift.isDown) {
+                this.sound.play('sfx-ui-blip')
                 this.scene.start('titleScene')
             }
         }
@@ -195,7 +205,8 @@ class Play extends Phaser.Scene {
         // increment level (ie, score)
         this.level++;
 
-        this.backgroundScroll *= 1.001
+        // make background move slightly faster
+        this.backgroundScroll *= 1.005
 
         // bump speed every 10 levels
         if (this.level % 10 == 0) {
@@ -247,6 +258,7 @@ class Play extends Phaser.Scene {
         if (this.secondsSinceHit >= 10 && this.health < this.maxHealth) {
             this.secondsSinceHit = 0
             this.health += 1
+            this.sound.play('sfx-heal')
             this.updateHearts()
         }
     }
