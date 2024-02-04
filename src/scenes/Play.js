@@ -100,7 +100,7 @@ class Play extends Phaser.Scene {
         })
 
         // Instructions at the beginning
-        this.instructions = this.add.text(h-64, w-64, 'USE ARROW KEYS TO DEFEND \nFROM INCOMING ARROWS').setOrigin(1, 1).setFontSize(32)
+        this.instructions = this.add.text(h-64, w-64, 'USE ARROW KEYS OR WASD TO \nDEFEND FROM INCOMING ARROWS').setOrigin(1, 1).setFontSize(32)
         this.instructionsTimer = this.time.addEvent({
             delay: 1000 * 10,
             callback: () => {
