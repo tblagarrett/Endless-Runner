@@ -26,8 +26,11 @@ class Play extends Phaser.Scene {
         this.arrowGroup = this.add.group({
             runChildUpdate: true
         })
-        this.physics.add.collider(this.player, this.arrowGroup, null, (player, arrow) => {
+        this.physics.add.collider(this.player, this.arrowGroup, (player, arrow) => {
             arrow.destroy()
+        }, (player, arrow) => {
+            arrow.destroy()
+            return player.didItHit(arrow)
         })
 
         // set up cursor keys

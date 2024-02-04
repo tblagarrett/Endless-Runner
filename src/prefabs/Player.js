@@ -36,4 +36,32 @@ class Player extends Phaser.GameObjects.Sprite {
                 break
         }
     }
+
+    oppositeDirection(direction) {
+        switch (direction) {
+            case directions.UP:
+                return directions.DOWN
+            case directions.DOWN:
+                return directions.UP
+            case directions.LEFT:
+                return directions.RIGHT
+            case directions.RIGHT:
+                return directions.LEFT
+            default:
+                console.log("Player: oppositeDirection: Not a valid direction")
+                break
+        }
+    }
+
+    didItHit(arrow) {
+        // defended
+        if (arrow.direction == this.oppositeDirection(this.facing)) {
+            return false;
+        }
+
+        // did not defend
+        this.scene.health -= 1
+        this.scene.updateHearts()
+        return true
+    }
 }
