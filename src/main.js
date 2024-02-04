@@ -28,9 +28,11 @@ settings = {
     launcherMinFrequency: 3,
     launcherCurrentFrequency: 3,
     launcherMaxFrequency: .3,
+    launcherFrequencyChange: .1,
     arrowMinSpeed: 50,
     arrowCurrentSpeed: 50,
-    arrowMaxSpeed: 400
+    arrowMaxSpeed: 400,
+    arrowSpeedChange: 10
 }
 
 // define globals
