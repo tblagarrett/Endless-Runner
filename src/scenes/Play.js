@@ -28,7 +28,8 @@ class Play extends Phaser.Scene {
             runChildUpdate: true
         })
         this.physics.add.collider(this.player, this.arrowGroup, (player, arrow) => {
-            arrow.destroy()
+            // if it hit
+            this.secondsSinceHit = 0
             this.health -= 1
             this.updateHearts()
 
@@ -36,6 +37,7 @@ class Play extends Phaser.Scene {
                 this.gameOver = true
             } 
         }, (player, arrow) => {
+            // check for hit
             arrow.destroy()
             return player.didItHit(arrow)
         })
@@ -52,6 +54,14 @@ class Play extends Phaser.Scene {
             loop: true
         });
 
+        // set up healing timer
+        this.healingTimer = this.time.addEvent({
+            delay: 1000,
+            callback: this.heal,
+            callbackScope: this,
+            loop: true
+        })
+
         // Game Over Flag
         this.gameOver = false;
 
@@ -66,6 +76,8 @@ class Play extends Phaser.Scene {
 
     update(time, delta) {
         if (this.gameOver) {
+            this.difficultyTimer.destroy()
+            this.healingTimer.destroy()
             this.add.text(w/2, h/2, 'GAME OVER', this.scoreConfig).setOrigin(0.5)
             this.add.text(w/2, h/2 + 64, 'Press (R) to Restart or ← for Menu', this.scoreConfig).setOrigin(0.5)
         }
@@ -132,6 +144,16 @@ class Play extends Phaser.Scene {
             } else {
                 this.hearts[i].visible = false
             }
+        }
+    }
+
+    heal() {
+        this.secondsSinceHit++
+
+        if (this.secondsSinceHit >= 10 && this.health < this.maxHealth) {
+            this.secondsSinceHit = 0
+            this.health += 1
+            this.updateHearts()
         }
     }
 
