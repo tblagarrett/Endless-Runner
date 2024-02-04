@@ -4,6 +4,11 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        // Background
+        this.starfield = this.add.tileSprite(0, 0, 640, 640, 'space').setOrigin(0, 0).setDepth(-1000)
+        this.backgroundScroll = .3
+        // this.starfield.setVisible(false)
+
         // Set player in the center
         this.player = new Player(this, w/2, h/2, 'player', 0)
         this.health = 4
@@ -22,6 +27,10 @@ class Play extends Phaser.Scene {
         this.launcherUp = new Launcher(this, w/2, h, 'launcher', 0, directions.UP).setOrigin(0.5, 0)
         this.launcherLeft = new Launcher(this, w, h/2, 'launcher', 0, directions.LEFT).setOrigin(0.5, 0)
         this.launcherRight = new Launcher(this, 0, h/2, 'launcher', 0, directions.RIGHT).setOrigin(0.5, 0)
+
+        // Create pipes that the arrows go on
+        this.add.rectangle(0, h/2, w, this.launcherRight.height + 10, this.getRandomColor()).setOrigin(0, 0.5).setDepth(-50)
+        this.add.rectangle(w/2, 0, this.launcherDown.width + 10, h, this.getRandomColor()).setOrigin(0.5, 0).setDepth(-60)
 
         // Set up arrow group and collision
         this.arrowGroup = this.add.group({
@@ -159,6 +168,19 @@ class Play extends Phaser.Scene {
             this.player.lookDirection(directions.RIGHT)
         }
 
+        // Move the space background
+        this.starfield.tilePositionX -= this.backgroundScroll
+
+        // if (this.player.facing == directions.UP) {
+        //     this.starfield.tilePositionY -= this.backgroundScroll
+        // } else if (this.player.facing == directions.DOWN) {
+        //     this.starfield.tilePositionY += this.backgroundScroll
+        // } else if (this.player.facing == directions.LEFT) {
+        //     this.starfield.tilePositionX -= this.backgroundScroll
+        // } else if (this.player.facing == directions.RIGHT) {
+        //     this.starfield.tilePositionX += this.backgroundScroll
+        // }
+
         // Make the launchers fire
         this.shoot(delta)
     }
@@ -166,6 +188,8 @@ class Play extends Phaser.Scene {
     levelBump() {
         // increment level (ie, score)
         this.level++;
+
+        this.backgroundScroll *= 1.001
 
         // bump speed every 10 levels
         if (this.level % 10 == 0) {
@@ -230,7 +254,7 @@ class Play extends Phaser.Scene {
     // https://stackoverflow.com/questions/1484506/random-color-generator
     getRandomColor() {
         let letters = '0123456789ABCDEF';
-        let color = '#';
+        let color = '0x';
         for (let i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
