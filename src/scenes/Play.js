@@ -133,7 +133,7 @@ class Play extends Phaser.Scene {
             this.timer.destroy()
             this.add.text(w/2, h/2 - 64, 'GAME OVER').setOrigin(0.5).setFontSize(32)
             this.add.text(w/2, h/2 - 36, 'You lasted ' + this.timeLasted + ' seconds').setOrigin(0.5).setFontSize(24)
-            this.add.text(w/2, h/2 + 64, 'Press (SPACE) to Restart or (SHIFT) for Menu').setOrigin(0.5)
+            this.add.text(w/2, h/2 + 64, 'Press (SPACE) to Restart or (SHIFT) for Menu').setOrigin(0.5).setFontSize(24)
 
             settings.launcherCurrentFrequency = settings.launcherMinFrequency
             settings.arrowCurrentSpeed = settings.arrowMinSpeed
