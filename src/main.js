@@ -1,5 +1,12 @@
 /*
 Name: Garrett Blake
+Game Title: ARROW
+Time Spent: 20 hours
+Creative Tilt: I'm really proud of this game, I wanted to make an endless runner without the "runner" and I feel that was accomplished well.
+The general concept of the game is my favorite part, but sections in Play.js like heal() and the increasing frequency/speed in levelBump()
+ended up working very nicely.
+
+If nothing, this game has been addicting to play
 */
 
 let directions = {
