@@ -65,6 +65,12 @@ class Play extends Phaser.Scene {
 
         // set up cursor keys
         this.cursors = this.input.keyboard.createCursorKeys();
+        // Create key objects for WASD keys
+        this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
         
         // set up difficulty timer (triggers callback every second)
         this.level = 0
@@ -174,13 +180,13 @@ class Play extends Phaser.Scene {
         if (this.gameOver) { return }
 
         // Adjust player facing
-        if (this.cursors.up.isDown) {
+        if (this.cursors.up.isDown || this.keyW.isDown) {
             this.player.lookDirection(directions.UP)
-        } else if (this.cursors.down.isDown) {
+        } else if (this.cursors.down.isDown || this.keyS.isDown) {
             this.player.lookDirection(directions.DOWN)
-        } else if (this.cursors.left.isDown) {
+        } else if (this.cursors.left.isDown || this.keyA.isDown) {
             this.player.lookDirection(directions.LEFT)
-        } else if (this.cursors.right.isDown) {
+        } else if (this.cursors.right.isDown || this.keyD.isDown) {
             this.player.lookDirection(directions.RIGHT)
         }
 
