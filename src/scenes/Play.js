@@ -8,6 +8,7 @@ class Play extends Phaser.Scene {
         this.player = new Player(this, w/2, h/2, 'player', 0)
         this.health = 4
         this.maxHealth = 4
+        this.secondsSinceHit = 0
 
         // set up hearts
         this.hearts = []
@@ -28,6 +29,12 @@ class Play extends Phaser.Scene {
         })
         this.physics.add.collider(this.player, this.arrowGroup, (player, arrow) => {
             arrow.destroy()
+            this.health -= 1
+            this.updateHearts()
+
+            if (this.health <= 0) {
+                this.gameOver = true
+            } 
         }, (player, arrow) => {
             arrow.destroy()
             return player.didItHit(arrow)
@@ -45,6 +52,9 @@ class Play extends Phaser.Scene {
             loop: true
         });
 
+        // Game Over Flag
+        this.gameOver = false;
+
         // Set up random launcher selection
         this.msCounter = 0
         this.launchers = [this.launcherDown, this.launcherUp, this.launcherLeft, this.launcherRight]
@@ -55,6 +65,14 @@ class Play extends Phaser.Scene {
     }
 
     update(time, delta) {
+        if (this.gameOver) {
+            this.add.text(w/2, h/2, 'GAME OVER', this.scoreConfig).setOrigin(0.5)
+            this.add.text(w/2, h/2 + 64, 'Press (R) to Restart or ← for Menu', this.scoreConfig).setOrigin(0.5)
+        }
+
+        // stop all later processes if the game is over
+        if (this.gameOver) { return }
+
         // Adjust player facing
         if (this.cursors.up.isDown) {
             this.player.lookDirection(directions.UP)

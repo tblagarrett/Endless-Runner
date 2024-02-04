@@ -60,8 +60,6 @@ class Player extends Phaser.GameObjects.Sprite {
         }
 
         // did not defend
-        this.scene.health -= 1
-        this.scene.updateHearts()
         return true
     }
 }
