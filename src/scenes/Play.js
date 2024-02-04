@@ -33,6 +33,10 @@ class Play extends Phaser.Scene {
             this.health -= 1
             this.updateHearts()
 
+                            
+            // cam shake: .shake( [duration] [, intensity] )
+            this.cameras.main.shake(100, 0.01);
+
             if (this.health <= 0) {
                 this.gameOver = true
             } 
@@ -62,6 +66,16 @@ class Play extends Phaser.Scene {
             loop: true
         })
 
+        // set up survival timer
+        this.timeLasted = 0
+        this.timerDisplay = this.add.text(w-30, 30, this.timeLasted).setOrigin(1, 0.5).setFontSize(32)
+        this.timer = this.time.addEvent({
+            delay: 1000,
+            callback: this.incrementTimer,
+            callbackScope: this,
+            loop: true
+        })
+
         // Game Over Flag
         this.gameOver = false;
 
@@ -78,8 +92,19 @@ class Play extends Phaser.Scene {
         if (this.gameOver) {
             this.difficultyTimer.destroy()
             this.healingTimer.destroy()
-            this.add.text(w/2, h/2, 'GAME OVER', this.scoreConfig).setOrigin(0.5)
-            this.add.text(w/2, h/2 + 64, 'Press (R) to Restart or ← for Menu', this.scoreConfig).setOrigin(0.5)
+            this.timer.destroy()
+            this.add.text(w/2, h/2 - 64, 'GAME OVER').setOrigin(0.5).setFontSize(32)
+            this.add.text(w/2, h/2 - 36, 'You lasted ' + this.timeLasted + ' seconds').setOrigin(0.5).setFontSize(24)
+            this.add.text(w/2, h/2 + 64, 'Press ← to Restart or → for Menu').setOrigin(0.5)
+
+            settings.launcherCurrentFrequency = settings.launcherMinFrequency
+            settings.arrowCurrentSpeed = settings.arrowMinSpeed
+            // Menu Navigation
+            if (this.cursors.left.isDown) {
+                this.scene.restart()
+            } else if (this.cursors.right.isDown) {
+                this.scene.start('titleScene')
+            }
         }
 
         // stop all later processes if the game is over
@@ -115,10 +140,11 @@ class Play extends Phaser.Scene {
         if(this.level % 5 == 0) {
             console.log(`level: ${this.level}, speed: ${settings.arrowCurrentSpeed}, frequency: ${settings.launcherCurrentFrequency}`);
             if(settings.launcherCurrentFrequency > settings.launcherMaxFrequency) {
-                settings.launcherCurrentFrequency -= settings.launcherFrequencyChange
-                
-                // cam shake: .shake( [duration] [, intensity] )
-                this.cameras.main.shake(100, 0.01);
+                if (settings.launcherCurrentFrequency > 1) {
+                    settings.launcherCurrentFrequency -= settings.launcherFrequencyChange * 2
+                } else {
+                    settings.launcherCurrentFrequency -= settings.launcherFrequencyChange / 2
+                }
             }
  
             // change game border color
@@ -155,6 +181,11 @@ class Play extends Phaser.Scene {
             this.health += 1
             this.updateHearts()
         }
+    }
+
+    incrementTimer() {
+        this.timeLasted++
+        this.timerDisplay.text = this.timeLasted
     }
 
     // random HTML hex color generator from:

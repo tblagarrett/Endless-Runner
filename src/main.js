@@ -15,9 +15,9 @@ let config = {
     height: 640,
     physics: {
         default: 'arcade',
-        arcade: {
-            debug: true
-        }
+        // arcade: {
+        //     debug: true
+        // }
     },
     pixelArt: true,
     scene: [ Load, Title, Play ]
@@ -32,7 +32,7 @@ settings = {
     arrowMinSpeed: 50,
     arrowCurrentSpeed: 50,
     arrowMaxSpeed: 400,
-    arrowSpeedChange: 10
+    arrowSpeedChange: 20
 }
 
 // define globals
