@@ -27,11 +27,11 @@ let game = new Phaser.Game(config)
 settings = {
     launcherMinFrequency: 3,
     launcherCurrentFrequency: 3,
-    launcherMaxFrequency: .3,
+    launcherMaxFrequency: .25,
     launcherFrequencyChange: .1,
     arrowMinSpeed: 50,
     arrowCurrentSpeed: 50,
-    arrowMaxSpeed: 400,
+    arrowMaxSpeed: 450,
     arrowSpeedChange: 20
 }
 

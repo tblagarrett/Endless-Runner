@@ -76,6 +76,44 @@ class Play extends Phaser.Scene {
             loop: true
         })
 
+        // Instructions at the beginning
+        this.instructions = this.add.text(h-64, w-64, 'USE ARROW KEYS TO DEFEND \nFROM INCOMING ARROWS').setOrigin(1, 1).setFontSize(32)
+        this.instructionsTimer = this.time.addEvent({
+            delay: 1000 * 10,
+            callback: () => {
+                // TWEEN GOTTEN FROM CHATGPT "how can I make text fade away in phaser3?"
+                // Create a tween to gradually change the alpha from 1 to 0 over 2000 milliseconds (2 seconds)
+                this.tweens.add({
+                    targets: this.instructions,
+                    alpha: 0,
+                    duration: 2000,
+                    onComplete: () => {
+                        this.instructions.destroy() // Destroy the text object after the tween completes
+                    }
+                })
+            },
+            callbackScope: this,
+            loop: false
+        })
+        this.healingInfo = this.add.text(h-64, w-64, 'SLOWLY HEAL AFTER NOT TAKING\nDAMAGE FOR SOME TIME').setOrigin(1, 1).setFontSize(32).setVisible(false)
+        this.healingInfoTimer = this.time.addEvent({
+            delay: 1000 * 12,
+            callback: () => {
+                this.healingInfo.setVisible(true)
+                this.tweens.add({
+                    targets: this.healingInfo,
+                    alpha: 0,
+                    duration: 1000 * 10,
+                    onComplete: () => {
+                        this.healingInfo.destroy()
+                    }
+                })
+            },
+            callbackScope: this,
+            loop: false
+        })
+
+
         // Game Over Flag
         this.gameOver = false;
 
@@ -95,14 +133,14 @@ class Play extends Phaser.Scene {
             this.timer.destroy()
             this.add.text(w/2, h/2 - 64, 'GAME OVER').setOrigin(0.5).setFontSize(32)
             this.add.text(w/2, h/2 - 36, 'You lasted ' + this.timeLasted + ' seconds').setOrigin(0.5).setFontSize(24)
-            this.add.text(w/2, h/2 + 64, 'Press ← to Restart or → for Menu').setOrigin(0.5)
+            this.add.text(w/2, h/2 + 64, 'Press (SPACE) to Restart or (SHIFT) for Menu').setOrigin(0.5)
 
             settings.launcherCurrentFrequency = settings.launcherMinFrequency
             settings.arrowCurrentSpeed = settings.arrowMinSpeed
             // Menu Navigation
-            if (this.cursors.left.isDown) {
+            if (this.cursors.space.isDown) {
                 this.scene.restart()
-            } else if (this.cursors.right.isDown) {
+            } else if (this.cursors.shift.isDown) {
                 this.scene.start('titleScene')
             }
         }
