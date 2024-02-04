@@ -6,6 +6,15 @@ class Play extends Phaser.Scene {
     create() {
         // Set player in the center
         this.player = new Player(this, w/2, h/2, 'player', 0)
+        this.health = 4
+        this.maxHealth = 4
+
+        // set up hearts
+        this.hearts = []
+        for (let i = 0; i < this.maxHealth; i++) {
+            let heart = this.add.sprite(30 + 38*i, 30, 'heart', 0)
+            this.hearts.push(heart)
+        }
 
         // Set up launchers
         this.launcherDown = new Launcher(this, w/2, 0, 'launcher', 0, directions.DOWN).setOrigin(0.5, 0)
@@ -85,12 +94,23 @@ class Play extends Phaser.Scene {
         }
     }
 
+    // makes a random launcher shoot
     shoot(delta) {
         this.msCounter += delta
         if (this.msCounter > settings.launcherCurrentFrequency * 1000) {
             let shooter = Phaser.Math.Between(0, this.launchers.length-1)
             this.launchers[shooter].spawn(this.arrowGroup)
             this.msCounter -= settings.launcherCurrentFrequency * 1000
+        }
+    }
+
+    updateHearts() {
+        for (let i = 0; i < this.maxHealth; i++) {
+            if (i <= this.health-1) {
+                this.hearts[i].visible = true
+            } else {
+                this.hearts[i].visible = false
+            }
         }
     }
 
