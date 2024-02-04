@@ -19,26 +19,36 @@ class Load extends Phaser.Scene {
 
         this.load.path = './assets/';
         // load graphics assets
-        this.load.image('player', 'img/player.png')
         this.load.image('launcher', 'img/launcher.png')
         this.load.image('arrow', 'img/arrow.png')
         this.load.image('heart', 'img/heart.png')
         this.load.image('space', 'img/space.png')
+        this.load.image('title', 'img/title.png')
+        this.load.image('credits', 'img/credits.png')
 
         // load sound assets
         this.load.audio('sfx-block', 'sfx/block.wav')
         this.load.audio('sfx-hurt', 'sfx/hurt.wav')
         this.load.audio('sfx-heal', 'sfx/heal.wav')
         this.load.audio('sfx-ui-blip', 'sfx/ui-blip.wav')
+
+        // load spritesheet
+        this.load.spritesheet('player', 'img/player.png', {
+            frameWidth: 48,
+            frameHeight: 48,
+            startFrame: 0,
+            endFrame: 5
+        })
     }
 
     create() {
-        // check for local storage browser support
-        if(window.localStorage) {
-            console.log('Local storage supported');
-        } else {
-            console.log('Local storage not supported');
-        }
+        // animation configuration
+        this.anims.create({
+            key: 'player-animation',
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 5, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        })
 
         // go to Title scene
         this.scene.start('titleScene');

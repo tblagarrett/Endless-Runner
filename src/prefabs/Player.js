@@ -3,7 +3,9 @@ class Player extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame)
 
         // Add Player to the scene
-        scene.add.existing(this)
+        let spritesheet = scene.add.existing(this)
+        spritesheet.anims.play('player-animation')
+
         scene.physics.add.existing(this)
         this.body.setImmovable(true)
         
