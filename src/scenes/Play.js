@@ -143,7 +143,7 @@ class Play extends Phaser.Scene {
         // set up audio, play bgm
         this.bgm = this.sound.add('bgm-arrow', { 
             mute: false,
-            volume: 1,
+            volume: .5,
             rate: 1,
             loop: true 
         });
@@ -167,6 +167,8 @@ class Play extends Phaser.Scene {
             this.difficultyTimer.destroy()
             this.healingTimer.destroy()
             this.timer.destroy()
+            this.bgm.rate = 1
+            this.bgm.volume = .1
 
             // display game over text, with rectangles behind
             let gameOver = this.add.text(w/2, h/2 - 64, 'GAME OVER').setOrigin(0.5).setFontSize(32).setDepth(20)
