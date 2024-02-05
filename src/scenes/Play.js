@@ -140,6 +140,14 @@ class Play extends Phaser.Scene {
             loop: false
         })
 
+        // set up audio, play bgm
+        this.bgm = this.sound.add('bgm-arrow', { 
+            mute: false,
+            volume: 1,
+            rate: 1,
+            loop: true 
+        });
+        this.bgm.play();
 
         // Game Over Flag
         this.gameOver = false;
@@ -147,7 +155,7 @@ class Play extends Phaser.Scene {
         // Set up random launcher selection
         this.msCounter = 0
         this.launchers = [this.launcherDown, this.launcherUp, this.launcherLeft, this.launcherRight]
-        
+
         // Shoot randomly at the start
         let shooter = Phaser.Math.Between(0, this.launchers.length-1)
         this.launchers[shooter].spawn(this.arrowGroup)
@@ -173,9 +181,11 @@ class Play extends Phaser.Scene {
             // Menu Navigation
             if (this.cursors.space.isDown) {
                 this.sound.play('sfx-ui-blip')
+                this.bgm.stop()
                 this.scene.restart()
             } else if (this.cursors.shift.isDown) {
                 this.sound.play('sfx-ui-blip')
+                this.bgm.stop()
                 this.scene.start('titleScene')
             }
         }
@@ -229,6 +239,8 @@ class Play extends Phaser.Scene {
         if(this.level % 5 == 0) {
             // console.log(`level: ${this.level}, speed: ${settings.arrowCurrentSpeed}, frequency: ${settings.launcherCurrentFrequency}`);
             if(settings.launcherCurrentFrequency > settings.launcherMaxFrequency) {
+                this.bgm.rate += 0.01 // increase bgm playback rate
+
                 if (settings.launcherCurrentFrequency > 1) {
                     settings.launcherCurrentFrequency -= settings.launcherFrequencyChange * 2
                 } else {

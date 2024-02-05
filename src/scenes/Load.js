@@ -31,6 +31,7 @@ class Load extends Phaser.Scene {
         this.load.audio('sfx-hurt', 'sfx/hurt.wav')
         this.load.audio('sfx-heal', 'sfx/heal.wav')
         this.load.audio('sfx-ui-blip', 'sfx/ui-blip.wav')
+        this.load.audio('bgm-arrow', 'sfx/garison_game_thing.mp3')
 
         // load spritesheet
         this.load.spritesheet('player', 'img/player.png', {

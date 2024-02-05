@@ -9,7 +9,9 @@ class Credits extends Phaser.Scene {
 
         this.add.text(40, h/2 - 100, `Created by: Garrett Blake
         \nSound effects generated at https://jfxr.frozenfractal.com/
-        \nVisuals made in aseprite`).setOrigin(0,0)
+        \nVisuals made in aseprite
+        \nBackground Music: Dee Merrill
+        ^Instagram: @itsmedeemusic`).setOrigin(0,0)
     
         this.input.keyboard.on('keydown', () => {
             this.sound.play('sfx-ui-blip')
