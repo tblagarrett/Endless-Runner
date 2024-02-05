@@ -91,13 +91,17 @@ class Play extends Phaser.Scene {
 
         // set up survival timer
         this.timeLasted = 0
-        this.timerDisplay = this.add.text(w-30, 30, this.timeLasted).setOrigin(1, 0.5).setFontSize(32)
+        // this.timerDisplay = this.add.text(w-30, 30, this.timeLasted).setOrigin(1, 0.5).setFontSize(32)
         this.timer = this.time.addEvent({
             delay: 1000,
             callback: this.incrementTimer,
             callbackScope: this,
             loop: true
         })
+
+        // Set up Arrow Count
+        this.arrowsBlocked = 0
+        this.arrowDisplay = this.add.text(w-30, 30, this.arrowsBlocked).setOrigin(1, 0.5).setFontSize(32)
 
         // Instructions at the beginning
         this.instructions = this.add.text(h-64, w-64, 'USE ARROW KEYS OR WASD TO \nDEFEND FROM INCOMING ARROWS').setOrigin(1, 1).setFontSize(32)
@@ -159,8 +163,8 @@ class Play extends Phaser.Scene {
             // display game over text, with rectangles behind
             let gameOver = this.add.text(w/2, h/2 - 64, 'GAME OVER').setOrigin(0.5).setFontSize(32).setDepth(20)
             this.add.rectangle(w/2, h/2 - 64, gameOver.width+20, gameOver.height+20, 0).setOrigin(0.5).setDepth(10)
-            let youLasted = this.add.text(w/2, h/2 - 36, 'You lasted ' + this.timeLasted + ' seconds').setOrigin(0.5).setFontSize(24).setDepth(20)
-            this.add.rectangle(w/2, h/2 - 36, youLasted.width+20, youLasted.height+20, 0).setOrigin(0.5).setDepth(10)
+            let youLasted = this.add.text(w/2, h/2 - 16, 'You lasted ' + this.timeLasted + ' seconds\nand blocked ' + this.arrowsBlocked + (this.arrowsBlocked != 1 ? ' arrows' : ' arrow')).setOrigin(0.5).setFontSize(24).setDepth(20)
+            this.add.rectangle(w/2, h/2 - 16, youLasted.width+20, youLasted.height+20, 0).setOrigin(0.5).setDepth(10)
             let pressKey = this.add.text(w/2, h/2 + 64, 'Press (SPACE) to Restart or (SHIFT) for Menu').setOrigin(0.5).setFontSize(24).setDepth(20)
             this.add.rectangle(w/2, h/2 + 64, pressKey.width+20, pressKey.height+20, 0, 1).setOrigin(0.5).setDepth(10)
 
@@ -271,7 +275,14 @@ class Play extends Phaser.Scene {
 
     incrementTimer() {
         this.timeLasted++
-        this.timerDisplay.text = this.timeLasted
+        // this.timerDisplay.text = this.timeLasted
+    }
+
+    blockArrow() {
+        // to stop counting after the game ends
+        if (this.gameOver) { return; }
+        this.arrowsBlocked++
+        this.arrowDisplay.text = this.arrowsBlocked
     }
 
     // random HTML hex color generator from:

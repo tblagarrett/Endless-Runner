@@ -11,6 +11,7 @@ class Player extends Phaser.GameObjects.Sprite {
         
         // Set up variables
         this.facing = directions.UP
+        this.context = scene
     }
 
     update() {
@@ -58,6 +59,7 @@ class Player extends Phaser.GameObjects.Sprite {
     didItHit(arrow) {
         // defended
         if (arrow.direction == this.oppositeDirection(this.facing)) {
+            this.context.blockArrow()
             return false;
         }
 
