@@ -32,8 +32,17 @@ class Launcher extends Phaser.GameObjects.Sprite {
         }
     }
 
-    spawn(group) {
+    spawn(arrowGroup, heartGroup) {
+        // if the player is hurt, have a chance to spawn a heart that heals them
+        if (this.scene.health < this.scene.maxHealth) {
+            if (Phaser.Math.Between(1, settings.heartOdds) == 1) {
+                let heart = new Heart(this.scene, this.x, this.y, 'heart', 0, this.direction)
+                heartGroup.add(heart)
+                return
+            }
+        }
+
         let arrow = new Arrow(this.scene, this.x, this.y, 'arrow', 0, this.direction)
-        group.add(arrow)
+        arrowGroup.add(arrow)
     }
 }

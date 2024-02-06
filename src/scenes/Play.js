@@ -62,6 +62,24 @@ class Play extends Phaser.Scene {
 
             return hit
         })
+        
+        // Set up heart group and collision
+        this.heartGroup = this.add.group({
+            runChildUpdate: true
+        })
+        this.physics.add.collider(this.player, this.heartGroup, (player, heart) => {
+            // if it hit
+            if (this.health < this.maxHealth) {
+                this.secondsSinceHit = 0
+                this.health += 1
+            }
+            this.updateHearts()
+            this.sound.play('sfx-heal')
+        }, (player, heart) => {
+            // check for hit
+            heart.destroy()
+            return heart.direction == player.oppositeDirection(player.facing)
+        })
 
         // set up cursor keys
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -104,7 +122,7 @@ class Play extends Phaser.Scene {
         this.arrowDisplay = this.add.text(w-30, 30, this.arrowsBlocked).setOrigin(1, 0.5).setFontSize(32)
 
         // Instructions at the beginning
-        this.instructions = this.add.text(h-64, w-64, 'USE ARROW KEYS OR WASD TO \nDEFEND FROM INCOMING ARROWS').setOrigin(1, 1).setFontSize(32)
+        this.instructions = this.add.text(h-64, w-64, 'USE ARROW KEYS OR WASD TO \nDEFEND FROM INCOMING ARROWS\nBY FACING THEM', {shadow: {offsetX: 1, offsetY: 1, fill: true}, align: "center"}).setOrigin(1, 1).setFontSize(32)
         this.instructionsTimer = this.time.addEvent({
             delay: 1000 * 10,
             callback: () => {
@@ -122,7 +140,7 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: false
         })
-        this.healingInfo = this.add.text(h-64, w-64, 'SLOWLY HEAL AFTER NOT TAKING\nDAMAGE FOR SOME TIME').setOrigin(1, 1).setFontSize(32).setVisible(false)
+        this.healingInfo = this.add.text(h-64, w-64, 'SLOWLY HEAL AFTER NOT TAKING\nDAMAGE FOR SOME TIME OR BY\nFACING INCOMING HEARTS', {shadow: {offsetX: 1, offsetY: 1, fill: true}, align: "center"}).setOrigin(1, 1).setFontSize(32).setVisible(false)
         this.healingInfoTimer = this.time.addEvent({
             delay: 1000 * 12,
             callback: () => {
@@ -261,7 +279,7 @@ class Play extends Phaser.Scene {
         this.msCounter += delta
         if (this.msCounter > settings.launcherCurrentFrequency * 1000) {
             let shooter = Phaser.Math.Between(0, this.launchers.length-1)
-            this.launchers[shooter].spawn(this.arrowGroup)
+            this.launchers[shooter].spawn(this.arrowGroup, this.heartGroup)
             this.msCounter -= settings.launcherCurrentFrequency * 1000
         }
     }

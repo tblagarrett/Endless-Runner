@@ -39,7 +39,8 @@ settings = {
     arrowMinSpeed: 50,
     arrowCurrentSpeed: 50,
     arrowMaxSpeed: 500,
-    arrowSpeedChange: 20
+    arrowSpeedChange: 20,
+    heartOdds: 25               // works as 1/heartOdds chance for a heart to spawn
 }
 
 // define globals
