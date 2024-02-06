@@ -32,13 +32,13 @@ let config = {
 
 let game = new Phaser.Game(config)
 settings = {
-    launcherMinFrequency: 3,
-    launcherCurrentFrequency: 3,
+    launcherMinFrequency: 2.5,
+    launcherCurrentFrequency: 2.5,
     launcherMaxFrequency: .3,
-    launcherFrequencyChange: .1,
+    launcherFrequencyChange: .07,
     arrowMinSpeed: 50,
     arrowCurrentSpeed: 50,
-    arrowMaxSpeed: 500,
+    arrowMaxSpeed: 700,
     arrowSpeedChange: 20,
     heartOdds: 25               // works as 1/heartOdds chance for a heart to spawn
 }

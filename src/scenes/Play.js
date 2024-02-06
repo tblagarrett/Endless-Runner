@@ -272,6 +272,15 @@ class Play extends Phaser.Scene {
             let rndColor = this.getRandomColor();
             document.getElementsByTagName('canvas')[0].style.borderColor = rndColor;
         }
+
+        if (this.level % 120 == 0) {
+            settings.arrowCurrentSpeed -= settings.arrowSpeedChange * 5
+            settings.launcherCurrentFrequency += settings.launcherFrequencyChange
+            this.bgm.rate -= 0.05
+        }
+        if (this.level % 200 == 0 && settings.launcherCurrentFrequency > .2) {
+            settings.arrowCurrentSpeed -= settings.launcherFrequencyChange / 3
+        }
     }
 
     // makes a random launcher shoot
