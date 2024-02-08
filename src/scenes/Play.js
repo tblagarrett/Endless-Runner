@@ -273,6 +273,18 @@ class Play extends Phaser.Scene {
             document.getElementsByTagName('canvas')[0].style.borderColor = rndColor;
         }
 
+        // Slowdown Warning
+        if (this.level % 119 == 0) {
+            let warning = this.add.text(w/4, h/4, 'SLOWDOWN!', {shadow: {offsetX: 1, offsetY: 1, fill: true}}).setScale(2).setOrigin(0.5, 0.5)
+            this.time.addEvent({
+                delay: 3000,
+                callback: () => {
+                    warning.destroy()
+                },
+                callbackScope: this,
+                loop: false
+            })
+        }
         if (this.level % 120 == 0) {
             settings.arrowCurrentSpeed -= settings.arrowSpeedChange * 5
             settings.launcherCurrentFrequency += settings.launcherFrequencyChange
