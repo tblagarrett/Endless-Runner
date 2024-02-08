@@ -286,8 +286,8 @@ class Play extends Phaser.Scene {
             })
         }
         if (this.level % 120 == 0) {
-            settings.arrowCurrentSpeed -= settings.arrowSpeedChange * 5
-            settings.launcherCurrentFrequency += settings.launcherFrequencyChange
+            settings.arrowCurrentSpeed -= settings.arrowSpeedChange * 3
+            settings.launcherCurrentFrequency += settings.launcherFrequencyChange * 2
             this.bgm.rate -= 0.05
         }
         if (this.level % 200 == 0 && settings.launcherCurrentFrequency > .2) {
